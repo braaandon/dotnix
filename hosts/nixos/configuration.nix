@@ -75,7 +75,6 @@
     direnv
     spotify
     discord
-    minecraft
     alacritty
     haskellPackages.xmobar
     # https://godbolt.org/z/qxq5KMsco :troll:
@@ -90,6 +89,5 @@
   };
 
   system.stateVersion = "21.11";
-
 }
 
