@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
+  # Nix Configuration
+
   nix = {
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -11,12 +13,19 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  # Bootloader & Kernel Configuration
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # Network Configuration
+
   networking = {
-    hostName = "nixos";
+    hostName = "desktop";
+
+    useDHCP = false;
+    interfaces.wlp6s0.useDHCP = true;
 
     wireless = {
       enable = true;
@@ -28,6 +37,8 @@
       };
     };
   };
+
+  # SystemD Services
 
   services = {
     xserver = {
@@ -45,11 +56,9 @@
     picom.enable = true;
   };
 
-  time.timeZone = "Europe/London";
+  # Time and Language
 
-  networking.useDHCP = false;
-  networking.interfaces.enp9s0.useDHCP = true;
-  networking.interfaces.wlp6s0.useDHCP = true;
+  time.timeZone = "Europe/London";
 
   i18n.defaultLocale = "en_GB.UTF-8";
   console = {
@@ -57,29 +66,37 @@
     keyMap = "uk";
   };
 
+  # Sound
+
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+
+  # Users
 
   users.users.brandon = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
   };
 
+  # System-wide Packages
+
   environment.systemPackages = with pkgs; [
     vim
     git
     wget
     rofi
-    firefox
+    kitty
     vscode
     direnv
     spotify
     discord
-    alacritty
+    firefox
     haskellPackages.xmobar
     # https://godbolt.org/z/qxq5KMsco :troll:
     (multimc.override { msaClientID = "499546d9-bbfe-4b9b-a086-eb3d75afb78f"; })
   ];
+
+  # Programs
 
   programs.mtr.enable = true;
   programs.steam.enable = true;
