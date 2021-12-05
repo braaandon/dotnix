@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, home-manager, ... }:
 
 {
   # Nix Configuration
@@ -53,6 +53,7 @@
       '';
     };
 
+    gnome.gnome-keyring.enable = true;
     picom.enable = true;
   };
 
@@ -85,6 +86,8 @@
     git
     wget
     rofi
+    file
+    nheko
     kitty
     vscode
     direnv
@@ -105,6 +108,6 @@
     enableSSHSupport = true;
   };
 
-  system.stateVersion = "21.11";
+  system.stateVersion = "22.05";
 }
 
